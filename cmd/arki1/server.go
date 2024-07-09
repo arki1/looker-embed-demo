@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
@@ -10,11 +11,20 @@ var (
 	// Local port to listen to.
 	Port = "8080"
 	// Mocked user - should be detected using the app authentication database.
-	User = "ronoaldo@arki1.com"
+	User = "embeded-user@arki1.com"
 )
+
+func init() {
+	flag.StringVar(&User, "user", "embeded-user@arki1.com",
+		"The user `EMAIL` to be used as a authenticated mock")
+	flag.StringVar(&Port, "port", "8080",
+		"The `PORT` to listen to")
+}
 
 // main is the program entrypoint, and starts the HTTP server on Port.
 func main() {
+	flag.Parse()
+
 	fmt.Println("Starting App Server for Looker Signed Embed Demo.")
 	fmt.Println("Open http://localhost:" + Port)
 	http.HandleFunc("/", index)
