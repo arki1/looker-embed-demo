@@ -1,19 +1,15 @@
-## Simple Looker Embed SDK Demo (Go)
+# Simple Looker Embed SDK Demo (Go)
 
 This demo showcases basic Go code for using Signed Embed to render
 a Looker Dashboard locally.
 
 It utilizes Docker containers for a streamlined setup.
 
-**Prerequisites:**
+## Prerequisites:
 
 * Docker and Docker Compose installed ([https://docs.docker.com/](https://docs.docker.com/))
 
-**Mandatory Environment Variable:**
-
-* `LOOKER_SERVER_URL`: The URL of your Looker instance.
-
-**Steps:**
+## Steps:
 
 1. **Generate Looker API Credentials:**
    - Access your Looker admin panel and navigate to your user settings.
@@ -33,3 +29,32 @@ It utilizes Docker containers for a streamlined setup.
    - Run `docker-compose up --build` to start the demo environment.
    - Access the demo application in your browser at `http://localhost:8080/`.
 
+
+## Deploy to Cloud Run
+
+This option will allow you to run the project as a hosted Cloud Run app.
+This requires that all previous steps were completed, including the
+`.env` file configuration part with the proper credentials.
+
+1. **Source the environment variables**
+
+```bash
+source .env
+```
+
+2. **Create secres on Secrets Manager**
+
+```bash
+printf "${LOOKERSDK_CLIENT_ID}" | gcloud secrets create LOOKERSDK_CLIENT_ID --data-file=-
+printf "${LOOKERSDK_CLIENT_SECRET}" | gcloud secrets create LOOKERSDK_CLIENT_SECRET --data-file=-
+```
+
+3. **Deploy the service to Cloud Run**
+
+```bash
+gcloud run deploy looker-embed-demo \
+   --set-env-vars="LOOKERSDK_BASE_URL=$LOOKERSDK_BASE_URL" \
+   --set-secrets="LOOKERSDK_CLIENT_ID=LOOKERSDK_CLIENT_ID:latest,LOOKERSDK_CLIENT_SECRET=LOOKERSDK_CLIENT_SECRET:latest" \
+   --region us-central1 \
+   --source .
+```
