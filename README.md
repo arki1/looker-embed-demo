@@ -1,16 +1,35 @@
-# Simple Looker Embed SDK Demo
+## Simple Looker Embed SDK Demo (Go)
 
-This demo demonstrates a minimal example of Source Code that can be executed
-locally and used to demonstrate how to use Signed Embed to render a Looker
-Dashboard.
+This demo showcases basic Go code for using Signed Embed to render
+a Looker Dashboard locally.
 
-## Setup
+It utilizes Docker containers for a streamlined setup.
 
-1. Go to the Looker Admin page, and browser for your user.
-2. Click the "Api Keys" button in your user page.
-3. Generate a new ClientID/ClientSecret and note them.
-4. Copy the .env.sample file to .env
-5. Edit the .env file and fill in your credentials
-6. Open the Cloud Shell and run the demo with `docker compose up --build`
-7. Open the Cloud Shell web preview at port 8080 and profit!
+**Prerequisites:**
+
+* Docker and Docker Compose installed ([https://docs.docker.com/](https://docs.docker.com/))
+
+**Mandatory Environment Variable:**
+
+* `LOOKER_SERVER_URL`: The URL of your Looker instance.
+
+**Steps:**
+
+1. **Generate Looker API Credentials:**
+   - Access your Looker admin panel and navigate to your user settings.
+   - Click "API Keys" and generate a new Client ID and Client Secret. Copy them for later use.
+
+2. **Set Up Environment Variables:**
+
+   **Option 1: Using the Provided .env.sample File**
+     - Copy the provided `.env.sample` file to `.env`.
+     - Edit the `.env` file and replace placeholders with your Looker credentials:
+        - `LOOKER_CLIENT_ID`
+        - `LOOKER_CLIENT_SECRET`
+        - `LOOKER_SERVER_URL`
+ 
+3. **Run the Demo:**
+   - Open a terminal and navigate to the project directory.
+   - Run `docker-compose up --build` to start the demo environment.
+   - Access the demo application in your browser at `http://localhost:8080/`.
 

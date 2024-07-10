@@ -22,7 +22,7 @@ var indexTpl = template.Must(template.New("index").Parse(`
 				height: 80px;
 				margin-left: 3.5rem;
 			}
-			p {
+			p, ul {
 				margin-left: 3.5rem;
 			}
 		</style>
@@ -34,9 +34,14 @@ var indexTpl = template.Must(template.New("index").Parse(`
 			</a>
 		</nav>
 		<p>
-			Welcome {{ .user }}!
+			Welcome <b>{{ .user }}</b>!
+		</p>
 
-			View <a href="/dashboard/">Release Notes Dashboard</a>.
+		<p>
+			Browse your reports:
+			<ul>
+				<li><a href="/dashboard/">Google Cloud Release Notes</a></li>
+			</ul>
 		</p>
 	</body>
 </html>

@@ -10,8 +10,13 @@ import (
 var (
 	// Local port to listen to.
 	Port = "8080"
+
 	// Mocked user - should be detected using the app authentication database.
 	User = "embeded-user@arki1.com"
+
+	// DashboardURL is the URL to the item that we want to embed in our app.
+	// Could be a Look or any other embeddable item URL.
+	DashboardURL = "https://arki1.cloud.looker.com/embed/dashboards/17"
 )
 
 func init() {
@@ -19,6 +24,8 @@ func init() {
 		"The user `EMAIL` to be used as a authenticated mock")
 	flag.StringVar(&Port, "port", "8080",
 		"The `PORT` to listen to")
+	flag.StringVar(&DashboardURL, "dashboard-url", "https://arki1.cloud.looker.com/embed/dashboards/17",
+		"The dashboard `URL` to be embedded.")
 }
 
 // main is the program entrypoint, and starts the HTTP server on Port.

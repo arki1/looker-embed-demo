@@ -8,9 +8,6 @@ import (
 )
 
 var (
-	// DashboardURL is the URL to the item that we want to embed in our app.
-	// Could be a Look or any other embeddable item URL.
-	DashboardURL = "https://arki1.cloud.looker.com/embed/dashboards/17"
 	// SessionLength defined how many seconds the user will remain authenticated.
 	SessionLength = int64(300)
 )
