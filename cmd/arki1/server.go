@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 var (
@@ -20,12 +21,16 @@ var (
 )
 
 func init() {
-	flag.StringVar(&User, "user", "embeded-user@arki1.com",
-		"The user `EMAIL` to be used as a authenticated mock")
-	flag.StringVar(&Port, "port", "8080",
+	// Setup some command line options and flags
+	flag.StringVar(&Port, "port",
+		env("PORT", "8080"),
 		"The `PORT` to listen to")
-	flag.StringVar(&DashboardURL, "dashboard-url", "https://arki1.cloud.looker.com/embed/dashboards/17",
-		"The dashboard `URL` to be embedded.")
+	flag.StringVar(&User, "user",
+		env("DEMO_USER", "embeded-user@arki1.com"),
+		"The user `EMAIL` to be used as a authenticated mocked user")
+	flag.StringVar(&DashboardURL, "dashboard-url",
+		env("DEMO_DASHBOARD", "https://arki1.cloud.looker.com/embed/dashboards/17"),
+		"The dashboard `URL` to be embedded")
 }
 
 // main is the program entrypoint, and starts the HTTP server on Port.
@@ -60,4 +65,11 @@ func dashboard(w http.ResponseWriter, r *http.Request) {
 	if err := dashboardTpl.Execute(w, map[string]any{"url": url}); err != nil {
 		log.Printf("Error rendering dashboard: %v", err)
 	}
+}
+
+func env(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
 }
