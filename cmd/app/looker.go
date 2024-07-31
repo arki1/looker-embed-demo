@@ -26,7 +26,7 @@ func ConnectWithLooker() (*v4.LookerSDK, error) {
 }
 
 // SignedEmbedURL is a small wrapper that will call the corresponding Looker API
-// and return a Signed Embedding URL. The user can either be redirected to this page
+// and return a Signed Embedding URL. The user can either be redirected to this page,
 // or we can use an iframe with this embedding.
 func SignedEmbedURL(user string) (url string, err error) {
 	sdk, err := ConnectWithLooker()
@@ -34,12 +34,22 @@ func SignedEmbedURL(user string) (url string, err error) {
 		return "", err
 	}
 
+	first_name := "External"
+	last_name := "User"
+
 	req := v4.EmbedSsoParams{
-		TargetUrl:      DashboardURL,
-		SessionLength:  &SessionLength,
+		TargetUrl:     *DashboardURL,
+		SessionLength: &SessionLength,
+
 		ExternalUserId: &user,
-		Permissions:    &[]string{"access_data", "see_looks", "see_user_dashboards"},
-		Models:         &[]string{"google_cloud"},
+		FirstName:      &first_name,
+		LastName:       &last_name,
+		UserAttributes: &map[string]interface{}{
+			"email": user,
+		},
+
+		Permissions: &[]string{"access_data", "see_looks", "see_user_dashboards"},
+		Models:      &[]string{"google_cloud"},
 	}
 
 	resp, err := sdk.CreateSsoEmbedUrl(req, nil)
